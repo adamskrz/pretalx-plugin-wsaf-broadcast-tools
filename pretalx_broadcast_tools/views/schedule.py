@@ -6,16 +6,16 @@ from django.urls import reverse
 from django.views import View
 from pretalx.agenda.views.schedule import ScheduleMixin
 from pretalx.common.views.mixins import EventPermissionRequired
-from pretalx.schedule.exporters import ScheduleData
 
 from ..utils.placeholders import placeholders
+from .wsaf_schedule import WSAFScheduleData
 
 
 class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
     permission_required = "schedule.list_schedule"
 
     def get(self, request, *args, **kwargs):
-        schedule = ScheduleData(
+        schedule = WSAFScheduleData(
             event=self.request.event,
             schedule=self.schedule,
         )
@@ -37,16 +37,16 @@ class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
                             "id": talk.submission.id,
                             "start": talk.start.astimezone(
                                 schedule.event.tz
-                            ).isoformat(),
-                            "start_ts": int(talk.start.timestamp()),
+                            ).isoformat() if talk.start else None,
+                            "start_ts": int(talk.start.timestamp()) if talk.start else None,
                             "end": (talk.start + dt.timedelta(minutes=talk.duration))
                             .astimezone(schedule.event.tz)
-                            .isoformat(),
+                            .isoformat() if talk.start else None,
                             "end_ts": int(
                                 (
                                     talk.start + dt.timedelta(minutes=talk.duration)
                                 ).timestamp()
-                            ),
+                            ) if talk.start else None,
                             "slug": talk.frab_slug,
                             "title": talk.submission.title,
                             "persons": [
