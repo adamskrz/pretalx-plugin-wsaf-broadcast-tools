@@ -30,7 +30,7 @@ urlpatterns = [
                 path(
                     "wsaf_schedule.json",
                     WSAFJsonView.as_view(),
-                    name="schedule",
+                    name="wsaf_schedule",
                 ),
                 path(
                     "lower-thirds/",

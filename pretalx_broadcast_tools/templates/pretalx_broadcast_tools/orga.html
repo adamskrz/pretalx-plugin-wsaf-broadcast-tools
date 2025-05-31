@@ -26,6 +26,7 @@
             </tbody>
         </table>
         <p><a href="{% url 'plugins:pretalx_broadcast_tools:lowerthirds_voctomix_download' request.event.slug %}">{% translate "Download voctomix-compatible lower thirds images" %}</a></p>
+        <p><a href="{% url 'plugins:pretalx_broadcast_tools:wsaf_schedule' request.event.slug %}">{% translate "WSAF Custom schedule.json" %}</a></p>
 
         <h2>{% translate "Placeholders" %}</h2>
         <p>{% translate "pretalx will automatically replace some placeholders in your custom content:" %}</p>
