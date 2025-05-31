@@ -181,8 +181,7 @@ class WSAFJsonView(View, ScheduleMixin):
         content = self.get_data()
         return JsonResponse(
             {
-                "$schema": "https://c3voc.de/schedule/schema.json",
-                "generator": {"name": "pretalx", "version": __version__},
+                "generator": {"name": "pretalx-wsaf-tools", "version": __version__},
                 "schedule": content,
             },
             encoder=I18nJSONEncoder,
@@ -301,6 +300,19 @@ class WSAFJsonView(View, ScheduleMixin):
                                         for resource in talk.submission.resources.all()
                                         if not resource.link
                                     ],
+                                    "answers": (
+                                        [
+                                            {
+                                                "question": answer.question.id,
+                                                "answer": answer.answer,
+                                                "options": [
+                                                    option.answer
+                                                    for option in answer.options.all()
+                                                ],
+                                            }
+                                            for answer in talk.submission.answers.all()
+                                        ]
+                                    ),
                                 }
                                 for talk in room["talks"]
                             ]
