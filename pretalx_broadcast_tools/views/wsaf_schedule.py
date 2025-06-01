@@ -310,7 +310,7 @@ class WSAFJsonView(View, ScheduleMixin):
                                                     for option in answer.options.all()
                                                 ],
                                             }
-                                            for answer in talk.submission.answers.all()
+                                            for answer in talk.submission.answers.filter(question__is_public=True).all()
                                         ]
                                     ),
                                 }
