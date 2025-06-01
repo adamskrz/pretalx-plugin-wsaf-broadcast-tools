@@ -135,7 +135,7 @@ class PDFInfoPage(Flowable):
                         self._localize(self.event.name),
                         self._localize(self.room["name"]),
                         talk_start.strftime("%F"),
-                        f'{talk_start.strftime("%T")} - {talk_end.strftime("%T")}',
+                        f"{talk_start.strftime('%T')} - {talk_end.strftime('%T')}",
                     ],
                 ),
                 style=self.style["Meta"],
@@ -193,6 +193,18 @@ class PDFInfoPage(Flowable):
                 Paragraph(
                     self.talk.submission.abstract,
                     style=self.style["Abstract"],
+                )
+            )
+
+        if (
+            self.talk.submission.description
+            and self.event.settings.broadcast_tools_pdf_show_description
+        ):
+            self._space()
+            self._add(
+                Paragraph(
+                    self.talk.submission.description,
+                    style=self.style["Notes"],
                 )
             )
 

@@ -68,6 +68,14 @@ class BroadcastToolsSettingsForm(I18nFormMixin, HierarkeyForm):
         label=_("Show internal notes in pdf export"),
         required=False,
     )
+    broadcast_tools_pdf_show_description = BooleanField(
+        help_text=_(
+            "If checked, the value of the 'description' field in a "
+            "submission will get added to the pdf export."
+        ),
+        label=_("Show description in pdf export"),
+        required=False,
+    )
     broadcast_tools_pdf_ignore_do_not_record = BooleanField(
         help_text=_(
             "If checked, 'do not record' talks will not generate a page "
