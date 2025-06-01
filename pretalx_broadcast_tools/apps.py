@@ -10,7 +10,7 @@ class PluginApp(AppConfig):
 
     class PretalxPluginMeta:
         name = gettext_lazy("Broadcasting Tools")
-        author = "kunsi"
+        author = "Adam (originally by kunsi)"
         description = gettext_lazy(
             "Some tools which can be used for supporting a broadcasting "
             "software, for example a 'lower third' page which can be "

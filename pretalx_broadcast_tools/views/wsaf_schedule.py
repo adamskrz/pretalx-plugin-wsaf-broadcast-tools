@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils.functional import cached_property
 from django.views import View
 from i18nfield.utils import I18nJSONEncoder
-from pretalx import __version__
+from pretalx_broadcast_tools import __version__
 from pretalx.agenda.views.schedule import ScheduleMixin
 from pretalx.common.exporter import BaseExporter
 from pretalx.common.urls import get_base_url
@@ -181,7 +181,11 @@ class WSAFJsonView(View, ScheduleMixin):
         content = self.get_data()
         return JsonResponse(
             {
-                "generator": {"name": "pretalx-wsaf-tools", "version": __version__},
+                "generator": {
+                    "name": "pretalx-wsaf-tools",
+                    "version": __version__,
+                    "timestamp": dt.datetime.now(dt.UTC).isoformat(),
+                    },
                 "schedule": content,
             },
             encoder=I18nJSONEncoder,
