@@ -1,1 +1,1 @@
-__version__ = "wsaf-20250601a"
+__version__ = "20250601a"
