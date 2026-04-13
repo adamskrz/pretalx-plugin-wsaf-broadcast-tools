@@ -19,18 +19,12 @@ class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
             event=self.request.event,
             schedule=self.schedule,
         )
-        infoline = str(
-            schedule.event.settings.broadcast_tools_lower_thirds_info_string or ""
-        )
+        infoline = str(schedule.event.settings.broadcast_tools_lower_thirds_info_string or "")
         try:
             return JsonResponse(
                 {
                     "rooms": sorted(
-                        {
-                            room["name"].localize(schedule.event.locale)
-                            for day in schedule.data
-                            for room in day["rooms"]
-                        }
+                        {room["name"].localize(schedule.event.locale) for day in schedule.data for room in day["rooms"]}
                     ),
                     "talks": [
                         {
@@ -49,10 +43,7 @@ class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
                             ) if talk.start else None,
                             "slug": talk.frab_slug,
                             "title": talk.submission.title,
-                            "persons": [
-                                person.get_display_name()
-                                for person in talk.submission.speakers.all()
-                            ],
+                            "persons": [person.get_display_name() for person in talk.submission.speakers.all()],
                             "track": (
                                 {
                                     "color": talk.submission.track.color,
@@ -63,9 +54,7 @@ class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
                             ),
                             "room": room["name"].localize(schedule.event.locale),
                             "infoline": infoline.format(
-                                **placeholders(
-                                    schedule.event, talk, supports_html_colour=True
-                                )
+                                **placeholders(schedule.event, talk, supports_html_colour=True)
                             ),
                             "image_url": talk.submission.image_url,
                             "locale": talk.submission.content_locale,
