@@ -4,13 +4,13 @@ from .views.event_info import BroadcastToolsEventInfoView
 from .views.orga import BroadcastToolsOrgaView
 from .views.qr import BroadcastToolsFeedbackQrCodeSvg, BroadcastToolsPublicQrCodeSvg
 from .views.schedule import BroadcastToolsScheduleView
-from .views.wsaf_schedule import WSAFJsonView
 from .views.static_html import (
     BroadcastToolsLowerThirdsView,
     BroadcastToolsRoomInfoView,
     BroadcastToolsRoomTimerView,
 )
 from .views.voctomix_export import BroadcastToolsLowerThirdsVoctomixDownloadView
+from .views.wsaf_schedule import WSAFJsonView
 
 urlpatterns = [
     path(

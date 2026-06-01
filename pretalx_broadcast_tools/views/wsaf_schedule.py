@@ -4,11 +4,12 @@ from django.http import JsonResponse
 from django.utils.functional import cached_property
 from django.views import View
 from i18nfield.utils import I18nJSONEncoder
-from pretalx_broadcast_tools import __version__
 from pretalx.agenda.views.schedule import ScheduleMixin
 from pretalx.common.exporter import BaseExporter
 from pretalx.common.urls import get_base_url
 from pretalx.submission.models import SubmissionStates
+
+from pretalx_broadcast_tools import __version__
 
 
 class WSAFScheduleData(BaseExporter):
