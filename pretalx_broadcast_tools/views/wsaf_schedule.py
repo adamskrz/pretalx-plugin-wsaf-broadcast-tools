@@ -243,15 +243,9 @@ class WSAFJsonView(View, ScheduleMixin):
                                         if talk.submission.image
                                         else None
                                     ),
-                                    "date": talk.local_start.isoformat()
-                                    if talk.local_start
-                                    else None,
-                                    "start": talk.local_start.strftime("%H:%M")
-                                    if talk.local_start
-                                    else None,
-                                    "duration": talk.export_duration
-                                    if talk.local_start
-                                    else None,
+                                    "date": talk.local_start.isoformat() if talk.local_start else None,
+                                    "start": talk.local_start.strftime("%H:%M") if talk.local_start else None,
+                                    "duration": talk.export_duration if talk.local_start else None,
                                     "room": str(room["name"]),
                                     "slug": talk.frab_slug,
                                     "url": talk.submission.urls.public.full(),
@@ -272,18 +266,20 @@ class WSAFJsonView(View, ScheduleMixin):
                                         {
                                             "code": person.code,
                                             "name": person.get_display_name(),
-                                            "avatar": person.get_avatar_url(self.event)
-                                            or None,
-                                            "biography": person.event_profile(
-                                                self.event
-                                            ).biography,
+                                            "avatar": (
+                                                person.profile_picture.get_avatar_url(
+                                                    event=self.event
+                                                )
+                                                if person.profile_picture_id
+                                                and self.event.cfp.request_avatar
+                                                else None
+                                            ),
+                                            "biography": person.biography,
                                             "public_name": person.get_display_name(),  # deprecated
-                                            "guid": person.guid,
-                                            "url": person.event_profile(
-                                                self.event
-                                            ).urls.public.full(),
+                                            "guid": person.user.guid,
+                                            "url": person.urls.public.full(),
                                         }
-                                        for person in talk.submission.speakers.all()
+                                        for person in talk.submission.sorted_speakers
                                     ],
                                     "links": [
                                         {
