@@ -63,7 +63,7 @@ class WSAFRssView(Feed):
                 )
             ),
             "description": item.submission.abstract if item.submission else None,
-            "category":  item.submission.track.name if item.submission and item.submission.track else None,
+            "category":  str(item.submission.track.name) if item.submission and item.submission.track else None,
             "start": item.local_start.isoformat() if item.local_start else None,
             "end": item.local_end.isoformat() if item.local_end else None,
             "duration": item.export_duration if item.local_start else None,
