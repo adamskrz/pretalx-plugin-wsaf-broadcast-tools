@@ -49,7 +49,7 @@ class WSAFRssView(Feed):
         # }
         talk_details = {
             "title": item.submission.title if item.submission else "No title",
-            "performer_name": (
+            "organiser": (
                 name_answer.answer
                 if (
                     name_answer := item.submission.answers.filter(
@@ -62,10 +62,13 @@ class WSAFRssView(Feed):
                     else None
                 )
             ),
-            "date": item.local_start.isoformat() if item.local_start else None,
-            "start": item.local_start.strftime("%H:%M") if item.local_start else None,
+            "description": item.submission.abstract if item.submission else None,
+            "category":  item.submission.track.name if item.submission and item.submission.track else None,
+            "start": item.local_start.isoformat() if item.local_start else None,
+            "end": item.local_end.isoformat() if item.local_end else None,
             "duration": item.export_duration if item.local_start else None,
             "venue": str(item.room.name) if item.room else None,
+            "colour": item.submission.track.color if item.submission and item.submission.track else None,
         }
         json_str = json.dumps(talk_details, cls=DjangoJSONEncoder)
         json_str = json_str.replace(" ", "%20")
