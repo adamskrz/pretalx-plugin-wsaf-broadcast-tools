@@ -57,7 +57,7 @@ class WSAFRssView(Feed):
             "date": item.local_start.isoformat() if item.local_start else None,
             "start": item.local_start.strftime("%H:%M") if item.local_start else None,
             "duration": item.export_duration if item.local_start else None,
-            "venue": str(item.room.name),
+            "venue": str(item.room.name) if item.room else None,
         }
         json_str = json.dumps(talk_details, cls=DjangoJSONEncoder)
         json_str = json_str.replace(" ", "%20")
