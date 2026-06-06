@@ -5,6 +5,13 @@ from i18nfield.forms import I18nFormField, I18nFormMixin, I18nTextInput
 
 
 class BroadcastToolsSettingsForm(I18nFormMixin, HierarkeyForm):
+    broadcast_tools_wsaf_performer_name = CharField(
+        help_text=_(
+            "Question ID for the performer name field."
+        ),
+        label=_("Performer name question ID"),
+        required=False,
+    )
     broadcast_tools_lower_thirds_no_talk_info = I18nFormField(
         help_text=_("Will be shown as talk title if there's currently no talk running."),
         label=_('"No talk running" information'),

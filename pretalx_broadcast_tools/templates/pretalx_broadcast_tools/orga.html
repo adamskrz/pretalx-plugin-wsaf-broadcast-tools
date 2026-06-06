@@ -54,6 +54,12 @@
         <h2>{% translate "Settings" %}</h2>
         <fieldset>
             <legend>
+                WSAF
+            </legend>
+            {{ form.broadcast_tools_wsaf_performer_name.as_field_group }}
+        </fieldset>
+        <fieldset>
+            <legend>
                 {% translate "Lower Thirds" %}
             </legend>
             {{ form.broadcast_tools_lower_thirds_no_talk_info.as_field_group }}

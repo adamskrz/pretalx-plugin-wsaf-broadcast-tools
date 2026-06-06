@@ -302,6 +302,9 @@ class WSAFJsonView(View, ScheduleMixin):
                                         for resource in talk.submission.resources.all()
                                         if not resource.link
                                     ],
+                                    "performer_name":
+                                    (name_answer.answer if (name_answer := talk.submission.answers.filter(question__id=self.event.settings.broadcast_tools_wsaf_performer_name).first()) else
+                                     talk.submission.speakers.first().get_display_name() if talk.submission.speakers.exists() else None),
                                     "answers": (
                                         [
                                             {
