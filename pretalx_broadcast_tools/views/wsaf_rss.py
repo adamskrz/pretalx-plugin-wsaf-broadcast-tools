@@ -54,8 +54,9 @@ class WSAFRssView(Feed):
                 if item.submission
                 else []
             ),
-            "start": item.local_start.isoformat(),
-            "end": item.local_end.isoformat(),
+            "date": item.local_start.isoformat() if item.local_start else None,
+            "start": item.local_start.strftime("%H:%M") if item.local_start else None,
+            "duration": item.export_duration if item.local_start else None,
             "venue": str(item.room.name),
         }
         json_str = json.dumps(talk_details, cls=DjangoJSONEncoder)
