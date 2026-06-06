@@ -49,10 +49,18 @@ class WSAFRssView(Feed):
         # }
         talk_details = {
             "title": item.submission.title if item.submission else "No title",
-            "speakers": (
-                [str(speaker) for speaker in item.submission.speakers.all()]
-                if item.submission
-                else []
+            "performer_name": (
+                name_answer.answer
+                if (
+                    name_answer := item.submission.answers.filter(
+                        question__id=item.event.settings.broadcast_tools_wsaf_performer_name
+                    ).first()
+                )
+                else (
+                    item.submission.speakers.first().get_display_name()
+                    if item.submission.speakers.exists()
+                    else None
+                )
             ),
             "date": item.local_start.isoformat() if item.local_start else None,
             "start": item.local_start.strftime("%H:%M") if item.local_start else None,
