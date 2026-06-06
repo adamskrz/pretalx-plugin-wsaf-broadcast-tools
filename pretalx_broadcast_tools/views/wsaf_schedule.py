@@ -73,22 +73,23 @@ class WSAFScheduleData(BaseExporter):
         }
 
         gallery_room = event.rooms.filter(name__icontains="gallery").first()
-        print(f"Using gallery room: {gallery_room}")
-        data["gallery"] = {
-            "index": "gallery",
-            "start": event.datetime_from.replace(hour=9, minute=0).astimezone(event.tz),
-            "end": event.datetime_to.replace(hour=22, minute=00).astimezone(event.tz),
-            "rooms": {
-                str(gallery_room.name): {
-                    "id": gallery_room.id,
-                    "guid": gallery_room.uuid,
-                    "name": gallery_room.name,
-                    "description": gallery_room.description,
-                    "position": gallery_room.position,
-                    "talks": [],
-                }
-            },
-        }
+        if gallery_room:
+            print(f"Using gallery room: {gallery_room}")
+            data["gallery"] = {
+                "index": "gallery",
+                "start": event.datetime_from.replace(hour=9, minute=0).astimezone(event.tz),
+                "end": event.datetime_to.replace(hour=22, minute=00).astimezone(event.tz),
+                "rooms": {
+                    str(gallery_room.name): {
+                        "id": gallery_room.id,
+                        "guid": gallery_room.uuid,
+                        "name": gallery_room.name,
+                        "description": gallery_room.description,
+                        "position": gallery_room.position,
+                        "talks": [],
+                    }
+                },
+            }
 
         if self.with_accepted:
             allowed_states = [

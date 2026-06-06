@@ -1,5 +1,7 @@
 from django.urls import include, path
 
+from pretalx_broadcast_tools.views.wsaf_rss import WSAFRssView
+
 from .views.event_info import BroadcastToolsEventInfoView
 from .views.orga import BroadcastToolsOrgaView
 from .views.qr import BroadcastToolsFeedbackQrCodeSvg, BroadcastToolsPublicQrCodeSvg
@@ -31,6 +33,11 @@ urlpatterns = [
                     "wsaf_schedule.json",
                     WSAFJsonView.as_view(),
                     name="wsaf_schedule",
+                ),
+                path(
+                    "wsaf_schedule.rss",
+                    WSAFRssView(),
+                    name="wsaf_schedule_rss",
                 ),
                 path(
                     "lower-thirds/",
