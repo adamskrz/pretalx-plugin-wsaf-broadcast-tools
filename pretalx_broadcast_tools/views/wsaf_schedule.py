@@ -191,6 +191,7 @@ class WSAFJsonView(View, ScheduleMixin):
                 "schedule": content,
             },
             encoder=I18nJSONEncoder,
+            headers={"Access-Control-Allow-Origin": "*"},
         )
 
     def get_data(self, **kwargs):
