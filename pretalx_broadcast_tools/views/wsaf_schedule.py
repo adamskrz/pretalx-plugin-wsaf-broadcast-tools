@@ -246,6 +246,7 @@ class WSAFJsonView(View, ScheduleMixin):
                                         else None
                                     ),
                                     "date": talk.local_start.isoformat() if talk.local_start else None,
+                                    "date_end": talk.local_end.isoformat() if talk.local_end else None,
                                     "start": talk.local_start.strftime("%H:%M") if talk.local_start else None,
                                     "duration": talk.export_duration if talk.local_start else None,
                                     "room": str(room["name"]),
