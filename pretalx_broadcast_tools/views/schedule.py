@@ -16,7 +16,7 @@ class BroadcastToolsScheduleView(EventPermissionRequired, ScheduleMixin, View):
     permission_required = "schedule.list_schedule"
 
     def get(self, request, *args, **kwargs):
-        schedule = ScheduleData(event=self.request.event, schedule=self.schedule)
+        schedule = ScheduleData(self.schedule or self.request.event.wip_schedule)
         infoline = str(
             schedule.event.settings.broadcast_tools_lower_thirds_info_string or ""
         )

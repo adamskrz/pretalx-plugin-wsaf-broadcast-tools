@@ -115,7 +115,7 @@ def rich_schedule(event, submission_type, room):
 def test_pdf_exporter_render(rich_schedule):
     event = rich_schedule
     with scope(event=event):
-        exporter = PDFExporter(event, schedule=event.current_schedule)
+        exporter = PDFExporter(event.current_schedule)
         name, content_type, content = exporter.render()
     assert content_type == "application/pdf"
     assert name.endswith(".pdf")
@@ -125,7 +125,7 @@ def test_pdf_exporter_render(rich_schedule):
 @pytest.mark.django_db
 def test_pdf_exporter_render_minimal(event, submission, schedule):
     with scope(event=event):
-        exporter = PDFExporter(event, schedule=event.current_schedule)
+        exporter = PDFExporter(event.current_schedule)
         name, content_type, content = exporter.render()
     assert content.startswith(b"%PDF")
 
@@ -136,7 +136,7 @@ def test_pdf_exporter_questions_setting_robustness(rich_schedule):
     with scope(event=event):
         # empty entries and non-numeric junk must not break the export
         event.settings.broadcast_tools_pdf_questions_to_include = "1,, abc , 2 "
-        exporter = PDFExporter(event, schedule=event.current_schedule)
+        exporter = PDFExporter(event.current_schedule)
         page = next(p for p in exporter._add_pages() if isinstance(p, PDFInfoPage))
         assert page._questions == {1, 2}
         name, content_type, content = exporter.render()
@@ -148,7 +148,7 @@ def test_pdf_exporter_ignore_do_not_record(rich_schedule):
     event = rich_schedule
     with scope(event=event):
         event.settings.broadcast_tools_pdf_ignore_do_not_record = True
-        exporter = PDFExporter(event, schedule=event.current_schedule)
+        exporter = PDFExporter(event.current_schedule)
         pages = exporter._add_pages()
     # Two talks, one of which (do_not_record) is skipped -> one page + break
     assert len([p for p in pages if isinstance(p, PDFInfoPage)]) == 1
@@ -171,7 +171,7 @@ class _NoLocalTalk:
 def test_pdf_info_page_without_local_start(rich_schedule):
     event = rich_schedule
     with scope(event=event):
-        exporter = PDFExporter(event, schedule=event.current_schedule)
+        exporter = PDFExporter(event.current_schedule)
         story = []
         for day in exporter.data:
             for room in day["rooms"]:
